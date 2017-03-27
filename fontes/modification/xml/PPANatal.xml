@@ -1,0 +1,1108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<modification>
+  <name>PPA NATAL</name>
+  <id>PPANatal</id>
+  <ecidade-version>2.3.39</ecidade-version>
+  
+  <file path='forms/db_frmorcprograma.php'>
+    <operation>
+      <search regex="true"><![CDATA[(\$o54_programa\s*=\s*\$o50_programa;)]]></search>
+      <add>
+        <![CDATA[$1
+    $o54_codtri = $o54_programa;]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true" flag="U"><![CDATA[<\?=@\$Lo54_problema((\n*.)*)<\/fieldset>]]></search>
+      <add>
+        <![CDATA[<b>Eixo</b>
+            </legend>
+            <table>
+              <tr>
+                <td>
+                   <? db_textarea('eixo', 0, 75, $Ieixo, true, 'text', $db_opcao, "");?>
+                </td>
+              </tr>
+            </table>
+          </fieldset>
+          <?db_input('o54_problema', 10, $Io54_problema, true, 'hidden', $db_opcao);?>
+        ]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[<\?=\@\$Lo54_finali\s*\?>]]></search>
+      <add>
+        <![CDATA[<b>Objetivo: </b>]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true" flag="U"><![CDATA[<fieldset>\n*.*<legend>\n*.*<\?=\@\$Lo54_objsetorassociado((\n*.*)*)<\/fieldset>]]></search>
+      <add>
+        <![CDATA[<? db_input('o54_objsetorassociado', 10, $Io54_objsetorassociado, true, 'hidden', $db_opcao) ?>]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true" flag="U"><![CDATA[<fieldset>\n*.*<legend>\n*.*<\?=\@\$Lo54_estrategiaimp((\n*.*)*)<\/fieldset>]]></search>
+      <add>
+        <![CDATA[<? db_input('o54_estrategiaimp', 10, $Io54_estrategiaimp, true, 'hidden', $db_opcao) ?>]]>
+      </add>
+    </operation>     
+  </file>
+  
+  <file path='orc1_orcprograma001.php'>
+    <operation>
+      <search regex="true"><![CDATA[.*g5.*]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>  
+  </file>
+  
+  <file path='orc1_orcprograma002.php'>
+    <operation>
+      <search regex="true"><![CDATA[.*(g5|g2|g3).*]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>  
+  </file>
+  
+  <file path='orc1_orcprograma003.php'>
+    <operation>
+      <search regex="true"><![CDATA[.*g5.*]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>  
+  </file>      
+  
+  <file path='orc1_orcprograma011.php'>
+    <operation>
+      <search regex="true"><![CDATA[(if\s*\(\s*\!\$lSqlErro\s*\&\&)]]></search>
+      <add>
+        <![CDATA[
+      //modificacao PPANATAL
+      $orcprogramaeixo = new cl_orcprogramaeixo();
+      $orcprogramaeixo->anousu      = $iAno;
+      $orcprogramaeixo->orcprograma = $oPost->o54_programa;
+      $orcprogramaeixo->eixo        = $oPost->eixo;
+      $orcprogramaeixo->incluir($iAno,$oPost->o54_programa);
+      if ( $orcprogramaeixo->erro_status == 0 ) {
+        $lSqlErro = true;
+        $sMsgErro = $orcprogramaeixo->erro_msg;
+        break;
+      }
+      //fim modificacao PPANATAL
+      
+    $1]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[parent.document.formaba.g5.disabled\s*=\s*false;]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[parent.document.formaba.g2.disabled\s*=\s*false;]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[parent.document.formaba.g3.disabled\s*=\s*false;]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[parent.mo_camada\('g5'\)]]></search>
+      <add>
+        <![CDATA[parent.mo_camada('g4')]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[.*iframe_g5.*]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>     
+  </file>  
+  
+  <file path='orc1_orcprograma012.php'>
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcprogramahorizontetemp->excluir\()]]></search>
+      <add>
+        <![CDATA[//modificacao PPANATAL
+    require_once("classes/db_orcprogramaeixo_classe.php");
+    $orcprogramaeixo = new cl_orcprogramaeixo();
+    $orcprogramaeixo->anousu      = $iAno;
+    $orcprogramaeixo->orcprograma = $oPost->o54_programa;
+    $orcprogramaeixo->eixo        = $oPost->eixo;
+    $orcprogramaeixo->excluir($iAno,$oPost->o54_programa);
+    $orcprogramaeixo->incluir($iAno,$oPost->o54_programa);
+    if ( $orcprogramaeixo->erro_status == 0 ) {
+        $lSqlErro = true;
+        $sMsgErro = $orcprogramaeixo->erro_msg;
+        break;
+    }
+    //fim modificacao PPANATAL
+
+$1]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(\$db_opcao\s*=\s*2;)]]></search>
+      <add>
+        <![CDATA[$db_opcao = 22; $lPesquisa = false;]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[(if\s*\(\s*\$db_opcao\s*==\s*22\s*\)\s*\{)]]></search>
+      <add>
+        <![CDATA[if ($db_opcao==22 && (!isset($lPesquisa) || $lPesquisa == true)) {]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[\$db_botao\s*=\s*true;]]></search>
+      <add>
+        <![CDATA[$db_botao = false;]]>
+      </add>
+    </operation>    
+    <operation>
+      <search regex="true"><![CDATA[(and\s*orcprogramahorizontetemp\.o17_anousu\s*=\s*orcprograma\.o54_anousu)]]></search>
+      <add>
+        <![CDATA[$1
+              left join plugins.orcprogramaeixo  on orcprograma = orcprograma.o54_programa
+                                                and anousu      = orcprograma.o54_anousu]]>
+      </add>
+    </operation>    
+    <operation>
+      <search regex="true"><![CDATA[.*g5.*]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[.*g2.*]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[.*g3.*]]></search>
+      <add>
+        <![CDATA[ ]]>
+      </add>
+    </operation>  
+  </file> 
+    
+  <file path='orc1_orcprograma013.php'>
+    <operation>
+      <search regex="true"><![CDATA[(\$sMsgErro\.*\$clorcprograma->erro_msg;)]]></search>
+      <add>
+        <![CDATA[$1
+            //modificacao PPANATAL
+            require_once("classes/db_orcprogramaeixo_classe.php");
+            $orcprogramaeixo = new cl_orcprogramaeixo();
+            $orcprogramaeixo->excluir($anoUsu,$oPost->o54_programa);
+            if ( $orcprogramaeixo->erro_status == 0 ) {
+                $lSqlErro = true;
+                $sMsgErro = $orcprogramaeixo->erro_msg;
+                break;
+            }
+            //fim modificacao PPANATAL]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[(\$db_botao\s*=\s*true;)]]></search>
+      <add>
+        <![CDATA[$1
+            //modificacao PPANATAL
+            require_once("classes/db_orcprogramaeixo_classe.php");
+            $orcprogramaeixo = new cl_orcprogramaeixo();
+            $result   = $orcprogramaeixo->sql_record($orcprogramaeixo->sql_query($oGet->chavepesquisa,$oGet->chavepesquisa1));
+            db_fieldsmemory($result,0);
+            //fim modificacao PPANATAL
+            ]]>
+      </add>
+    </operation>    
+  </file>
+  
+  <file path='orc1_orcindicaprograma001.php'>
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcindicaprograma->incluir\(.*\);)]]></search>
+      <add>
+        <![CDATA[$1
+        
+    $clorcprogramaindicadores = new cl_orcprogramaindicadores();
+    $clorcprogramaindicadores->sequencial = null;
+    $clorcprogramaindicadores->orcindicaprograma  = $clorcindicaprograma->o18_sequencial;
+    $clorcprogramaindicadores->usuario = db_getsession("DB_id_usuario");
+    $clorcprogramaindicadores->departamento = db_getsession("DB_coddepto");
+    $clorcprogramaindicadores->acao = "I";
+    $clorcprogramaindicadores->data = date("Y-m-d");
+    $clorcprogramaindicadores->incluir(null);
+    if ( $clorcprogramaindicadores->erro_status == 0 ) {
+        $lSqlErro = true;
+        $sErroMsg = $clorcprogramaindicadores->erro_msg;
+    }
+        ]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcindicaprograma->alterar\(.*\);)]]></search>
+      <add>
+        <![CDATA[$clorcprogramaindicadores = new cl_orcprogramaindicadores();
+  $clorcprogramaindicadores->sequencial = null;
+  $clorcprogramaindicadores->orcindicaprograma  = $clorcindicaprograma->o18_sequencial;
+  $clorcprogramaindicadores->usuario = db_getsession("DB_id_usuario");
+  $clorcprogramaindicadores->departamento = db_getsession("DB_coddepto");
+  $clorcprogramaindicadores->acao = "A";
+  $clorcprogramaindicadores->data = date("Y-m-d");
+  $clorcprogramaindicadores->incluir(null);
+  if ( $clorcprogramaindicadores->erro_status == 0 ) {
+    $lSqlErro = true;
+    $sErroMsg = $clorcprogramaindicadores->erro_msg;
+  }
+  
+  $1]]>
+      </add>
+    </operation> 
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcindicaprograma->excluir\(.*\);)]]></search>
+      <add>
+        <![CDATA[$clorcprogramaindicadores = new cl_orcprogramaindicadores();
+  $clorcprogramaindicadores->sequencial = null;
+  $clorcprogramaindicadores->orcindicaprograma  = $oPost->o18_sequencial;
+  $clorcprogramaindicadores->usuario = db_getsession("DB_id_usuario");
+  $clorcprogramaindicadores->departamento = db_getsession("DB_coddepto");
+  $clorcprogramaindicadores->acao = "E";
+  $clorcprogramaindicadores->data = date("Y-m-d");
+  $clorcprogramaindicadores->incluir(null);
+  if ( $clorcprogramaindicadores->erro_status == 0 ) {
+    $lSqlErro = true;
+    $sErroMsg = $clorcprogramaindicadores->erro_msg;
+  }
+  
+  $1]]>
+      </add>
+    </operation>         
+  </file>   
+  
+  <file path='forms/db_frmorcindica.php'>
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To10_valorunidade.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To10_valorunidade?>">]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To10_valorindiceref.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To10_valorindiceref?>">]]>
+      </add>
+    </operation> 
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To10_valorindicefinal.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To10_valorindicefinal?>">]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To10_basegeografica.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To10_basegeografica?>">]]>
+      </add>
+    </operation>             
+  </file> 
+  
+ <file path='func_orcproduto.php'>
+    <operation>
+      <search regex="true"><![CDATA[(.*Fechar.*)]]></search>
+      <add>
+        <![CDATA[$1
+              <input name="Novo"   type="button" id="novo  " value="Novo"   onClick="js_novoCadastro();">]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[<\/html>]]></search>
+      <add>
+        <![CDATA[$1
+<script>
+function js_novoCadastro() {
+    location.href = "orc1_orcproduto001.php?novo=true&funcao_js=parent.js_mostraorcproduto1";
+}
+</script>]]>
+      </add>
+    </operation>               
+  </file>    
+  
+ <file path='func_orcindica.php'>
+    <operation>
+      <search regex="true"><![CDATA[\$campos\s*=.*;]]></search>
+      <add>
+        <![CDATA[$campos = "o10_indica, o10_descr,o10_obs,o10_periodicidade,o10_descrunidade,o10_descrindicefinal,o10_fonte,o10_formulacalculo";]]>
+      </add>
+    </operation>    
+  </file>     
+  
+ <file path='orc1_orcproduto001.php'>
+    <operation>
+      <search regex="true"><![CDATA[}\n*.*(db_menu\(.*\);)]]></search>
+      <add>
+        <![CDATA[$1
+}]]>
+      </add>
+    </operation>    
+  </file>       
+  
+  <file path='orc1_orcprojativ001.php'>
+    <operation>
+      <search regex="true" flag="U"><![CDATA[\$clcriaabas->((\n*.*)*)cria_abas\(\);]]></search>
+      <add>
+        <![CDATA[$clcriaabas->identifica = array("g1" => "Dados Ação",
+                                                 "g2" => "Metas",
+                                                 "g3" => "Recursos");
+
+       $clcriaabas->title      = array("g1" => "Dados Ação",
+                                       "g2" => "Metas",
+                                       "g3" => "Recursos");
+
+
+       $clcriaabas->src        = array("g1" => "orc1_orcprojativ011.php",
+                                       "g2" => "orc1_orcprojativmetas001.php",
+                                       "g3" => "orc1_orcprojativdetalhamentorecursos001.php");
+       $clcriaabas->cria_abas();]]>
+      </add>
+    </operation>
+  </file>
+  
+  <file path='orc1_orcprojativ002.php'>
+    <operation>
+      <search regex="true" flag="U"><![CDATA[\$clcriaabas->((\n*.*)*)cria_abas\(\);]]></search>
+      <add>
+        <![CDATA[$clcriaabas->identifica = array("g1" => "Dados Ação",
+                                                 "g2" => "Metas",
+                                                 "g3" => "Recursos");
+
+       $clcriaabas->title      = array("g1" => "Dados Ação",
+                                       "g2" => "Metas",
+                                       "g3" => "Recursos");
+
+
+       $clcriaabas->src        = array("g1" => "orc1_orcprojativ012.php",
+                                       "g2" => "orc1_orcprojativmetas001.php",
+                                       "g3" => "orc1_orcprojativdetalhamentorecursos001.php");
+       $clcriaabas->cria_abas();]]>
+      </add>
+    </operation>
+  </file>
+  
+  <file path='orc1_orcprojativ003.php'>
+    <operation>
+      <search regex="true" flag="U"><![CDATA[\$clcriaabas->((\n*.*)*)cria_abas\(\);]]></search>
+      <add>
+        <![CDATA[$clcriaabas->identifica = array("g1" => "Dados Ação",
+                                                 "g2" => "Metas",
+                                                 "g3" => "Recursos");
+
+       $clcriaabas->title      = array("g1" => "Dados Ação",
+                                       "g2" => "Metas",
+                                       "g3" => "Recursos");
+
+
+       $clcriaabas->src        = array("g1" => "orc1_orcprojativ013.php",
+                                       "g2" => "orc1_orcprojativmetas001.php",
+                                       "g3" => "orc1_orcprojativdetalhamentorecursos001.php");
+       $clcriaabas->cria_abas();]]>
+      </add>
+    </operation>
+  </file>
+  
+  <file path='orc1_orcprojativ011.php'>
+    <operation>
+      <search regex="true"><![CDATA[\&\&\s*\$HTTP_POST_VARS\["db_opcao"\]\)\s*==\s*"Incluir"]]></search>
+      <add>
+        <![CDATA[ ) ]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcprojativ->incluir\()]]></search>
+      <add>
+        <![CDATA[$clorcprojativ->o55_descr    = substr($o55_descr, 0, 40);
+    $1]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(<s.*scripts\/scripts.js.*>)]]></search>
+      <add>
+        <![CDATA[$1
+<script language="JavaScript" type="text/javascript" src="scripts/prototype.js"></script>]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(if\s*\(\s*\!\$lSqlErro\s*\&\&)]]></search>
+      <add>
+        <![CDATA[
+      //modificacao PPANATAL
+      $orcprojativdescricao = new cl_orcprojativdescricao();
+      $orcprojativdescricao->anousu       = $iAno;
+      $orcprojativdescricao->orcprojativ  = $o55_projativ;
+      $orcprojativdescricao->descricao    = $o55_descr;
+      $orcprojativdescricao->incluir($iAno, $o55_projativ);
+      if ( $orcprojativdescricao->erro_status == 0 ) {
+         $lSqlErro = true;
+         $sMsgErro = $orcprojativdescricao->erro_msg;
+      }      
+      
+      $orcprojativlog = new cl_orcprojativlog();
+      $orcprojativlog->anousu       = $iAno;
+      $orcprojativlog->orcprojativ  = $o55_projativ;
+      $orcprojativlog->usuario      = db_getsession("DB_id_usuario");
+      $orcprojativlog->departamento = db_getsession("DB_coddepto");
+      $orcprojativlog->data         = date("Y-m-d");
+      $orcprojativlog->acao         = "I";
+      $orcprojativlog->incluir();
+      
+      if ($orgao != "") {
+    
+        $orcprojativorcunidade = new cl_orcprojativorcunidade();
+        $orcprojativorcunidade->anousu      = $o55_anousu;
+        $orcprojativorcunidade->orcprojativ = $o55_projativ;
+        $orcprojativorcunidade->orcorgao       = $orgao;
+        $orcprojativorcunidade->orcunidade     = $unidade;
+        $orcprojativorcunidade->incluir(null);
+        if ( $orcprojativorcunidade->erro_status == 0 ) {
+            $lSqlErro = true;
+            $sMsgErro = $orcprojativorcunidade->erro_msg;
+        }
+      
+      }
+    
+      if ($programa!="") {
+        $orcprojativprograma = new cl_orcprojativprograma();
+        $orcprojativprograma->anousu         = $iAno;
+        $orcprojativprograma->orcprojativ    = $o55_projativ;
+        $orcprojativprograma->orcprograma    = $programa;
+        $orcprojativprograma->incluir(null);
+        if ( $orcprojativprograma->erro_status == 0 ) {
+          $lSqlErro = true;
+          $sMsgErro = $orcprojativprograma->erro_msg;
+        }
+      }
+      
+      if (isset($abrangencias) && $abrangencias != "") {
+        $aAbrangencias = explode("|",$abrangencias);
+        for ($iInd = 0; $iInd < count($aAbrangencias); $iInd++) {
+          
+          $orcprojativabrangencia = new cl_orcprojativabrangencia();
+          $orcprojativabrangencia->anousu          = $iAno;
+          $orcprojativabrangencia->orcprojativ     = $o55_projativ;
+          $orcprojativabrangencia->ppaabrangencia  = $aAbrangencias[$iInd];
+          $orcprojativabrangencia->incluir(null);
+          if ( $orcprojativabrangencia->erro_status == 0 ) {
+              $lSqlErro = true;
+              $sMsgErro = $orcprojativabrangencia->erro_msg;
+          }
+        
+        }
+      }
+      //fim modificacao PPANATAL
+      
+    $1]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[orc1_orcprojativprogramfisica001.php]]></search>
+      <add>
+        <![CDATA[orc1_orcprojativmetas001.php]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[orc1_orciniciativavinculoprojativ001.php]]></search>
+      <add>
+        <![CDATA[orc1_orcprojativdetalhamentorecursos001.php]]>
+      </add>
+    </operation>    
+  </file>
+  
+  <file path='orc1_orcprojativ012.php'>
+    <operation>
+      <search regex="true"><![CDATA[\&\&\s*\$HTTP_POST_VARS\["db_opcao"\]\)\s*==\s*"Alterar"]]></search>
+      <add>
+        <![CDATA[ ) ]]>
+      </add>
+    </operation> 
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcprojativ->alterar\()]]></search>
+      <add>
+        <![CDATA[$clorcprojativ->o55_descr    = substr($o55_descr, 0, 40);
+    $1]]>
+      </add>
+    </operation>       
+    <operation>
+      <search regex="true"><![CDATA[(<s.*scripts\/scripts.js.*>)]]></search>
+      <add>
+        <![CDATA[$1
+<script language="JavaScript" type="text/javascript" src="scripts/prototype.js"></script>]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[(<script.*src="scripts\/scripts.js"><\/script>)]]></search>
+      <add>
+        <![CDATA[$1
+      <script language="JavaScript" type="text/javascript" src="scripts/prototype.js"></script>]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[(if\s*\(\s*\!\$lSqlErro\s*\&\&)]]></search>
+      <add>
+        <![CDATA[    
+    //modificacao PPANATAL
+    $orcprojativdescricao = new cl_orcprojativdescricao();
+    $orcprojativdescricao->anousu       = $o55_anousu;
+    $orcprojativdescricao->orcprojativ  = $o55_projativ;
+    $orcprojativdescricao->descricao    = $o55_descr;
+    $orcprojativdescricao->alterar($o55_anousu, $o55_projativ);
+    if ( $orcprojativdescricao->erro_status == 0 ) {
+        $lSqlErro = true;
+        $sMsgErro = $orcprojativdescricao->erro_msg;
+    }
+                
+    $orcprojativlog = new cl_orcprojativlog();
+    $orcprojativlog->anousu       = $o55_anousu;
+    $orcprojativlog->orcprojativ  = $o55_projativ;
+    $orcprojativlog->usuario      = db_getsession("DB_id_usuario");
+    $orcprojativlog->departamento = db_getsession("DB_coddepto");
+    $orcprojativlog->data         = date("Y-m-d");
+    $orcprojativlog->acao         = "A";
+    $orcprojativlog->incluir();
+    
+    $orcprojativprograma = new cl_orcprojativprograma();
+    $orcprojativprograma->excluir(null, "anousu = {$o55_anousu} and orcprojativ = {$o55_projativ}");
+    if ( $orcprojativprograma->erro_status == 0 ) {
+      $lSqlErro = true;
+      $sMsgErro = $orcprojativprograma->erro_msg;
+    }
+   
+    if ($programa != "") {
+      $orcprojativprograma->anousu      = $o55_anousu;
+      $orcprojativprograma->orcprojativ = $o55_projativ;
+      $orcprojativprograma->orcprograma = $programa;
+      $orcprojativprograma->incluir(null);
+      if ( $orcprojativprograma->erro_status == 0 ) {
+          $lSqlErro = true;
+          $sMsgErro = $orcprojativprograma->erro_msg;
+      }
+    }
+    
+    if ($orgao != "") {
+    
+      $orcprojativorcunidade = new cl_orcprojativorcunidade();
+      $orcprojativorcunidade->excluir(null, "anousu = {$o55_anousu} and orcprojativ = {$o55_projativ}");
+      if ( $orcprojativorcunidade->erro_status == 0 ) {
+          $lSqlErro = true;
+          $sMsgErro = $orcprojativorcunidade->erro_msg;
+      }
+      
+      $orcprojativorcunidade->anousu      = $o55_anousu;
+      $orcprojativorcunidade->orcprojativ = $o55_projativ;
+      $orcprojativorcunidade->orcorgao       = $orgao;
+      $orcprojativorcunidade->orcunidade     = $unidade;
+      $orcprojativorcunidade->incluir(null);
+      if ( $orcprojativorcunidade->erro_status == 0 ) {
+          $lSqlErro = true;
+          $sMsgErro = $orcprojativorcunidade->erro_msg;
+      }
+      
+    }
+    
+    $orcprojativabrangencia = new cl_orcprojativabrangencia();
+    $orcprojativabrangencia->excluir(null, "anousu = {$o55_anousu} and orcprojativ = {$o55_projativ}");
+    if ( $orcprojativabrangencia->erro_status == 0 ) {
+        $lSqlErro = true;
+        $sMsgErro = $orcprojativabrangencia->erro_msg;
+    }
+    
+    if (isset($abrangencias) && $abrangencias != "") {
+      $aAbrangencias = explode("|",$abrangencias);
+      for ($iInd = 0; $iInd < count($aAbrangencias); $iInd++) {
+      
+        $orcprojativabrangencia->sequencial      = null;
+        $orcprojativabrangencia->anousu          = $o55_anousu;
+        $orcprojativabrangencia->orcprojativ     = $o55_projativ;
+        $orcprojativabrangencia->ppaabrangencia  = $aAbrangencias[$iInd];
+        $orcprojativabrangencia->incluir(null);
+        if ( $orcprojativabrangencia->erro_status == 0 ) {
+            $lSqlErro = true;
+            echo $sMsgErro = $orcprojativabrangencia->erro_msg;
+        }
+      
+      }
+    }
+    //fim modificacao PPANATAL
+
+  $1]]>
+      </add>
+    </operation>   
+    <operation>
+      <search regex="true"><![CDATA[(\$digito.*;)]]></search>
+      <add>
+        <![CDATA[$1
+        
+   //modificacao PPANatal
+   $sSqlOrcProjAtivPPANatal = "select lpad(orcprograma,4,'0') as programa,
+                                      o54_descr,
+                                      case when descricao is null then '{$o55_descr}' else descricao end as o55_descr,
+                                      o40_orgao as orgao, 
+                                      o40_descr as orgao_descricao, 
+                                      o41_unidade as unidade, 
+                                      o41_descr as unidade_descricao
+                                 from orcprojativ 
+                                      left join plugins.orcprojativprograma    on orcprojativprograma.anousu        = o55_anousu
+                                                                              and orcprojativprograma.orcprojativ   = o55_projativ
+                                      left join orcprograma                    on o54_anousu                        = o55_anousu 
+                                                                              and o54_programa                      = orcprojativprograma.orcprograma
+                                      left join plugins.orcprojativdescricao   on orcprojativdescricao.anousu       = o55_anousu
+                                                                              and orcprojativdescricao.orcprojativ  = o55_projativ
+                                      left join plugins.orcprojativorcunidade  on orcprojativorcunidade.orcprojativ = o55_projativ
+                                                                              and orcprojativorcunidade.anousu      = o55_anousu
+                                      left join orcunidade                     on o41_orgao                         = orcprojativorcunidade.orcorgao    
+                                                                              and o41_unidade                       = orcprojativorcunidade.orcunidade   
+                                                                              and o41_anousu                        = orcprojativorcunidade.anousu      
+                                      left join orcorgao                       on o40_anousu                        = o41_anousu 
+                                                                              and o40_orgao                         = o41_orgao
+                                where o55_projativ = {$o55_projativ}
+                                  and o55_anousu   = {$o55_anousu}";                                  
+   $result = $clorcprojativ->sql_record($sSqlOrcProjAtivPPANatal);
+   db_fieldsmemory($result,0);
+   //fim modificacao PPANatal
+        ]]>
+      </add>
+    </operation>    
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcprojativ->erro\(true,false\);)]]></search>
+      <add>
+        <![CDATA[$1
+    
+    echo " <script>                                                   ";
+    echo "   parent.iframe_g1.location.href='orc1_orcprojativ012.php'; ";
+    echo " </script>                                                   ";]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[orc1_orcprojativprogramfisica001.php]]></search>
+      <add>
+        <![CDATA[orc1_orcprojativmetas001.php]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[orc1_orciniciativavinculoprojativ001.php]]></search>
+      <add>
+        <![CDATA[orc1_orcprojativdetalhamentorecursos001.php]]>
+      </add>
+    </operation>
+  </file>
+  
+  <file path='orc1_orcprojativ013.php'>
+    <operation>
+      <search regex="true"><![CDATA[\&\&\s*\$HTTP_POST_VARS\["db_opcao"\]\)\s*==\s*"Excluir"]]></search>
+      <add>
+        <![CDATA[ ) ]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[(<s.*scripts\/scripts.js.*>)]]></search>
+      <add>
+        <![CDATA[$1
+<script language="JavaScript" type="text/javascript" src="scripts/prototype.js"></script>]]>
+      </add>
+    </operation>  
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcprojativ->excluir\(.*\);)]]></search>
+      <add>
+        <![CDATA[
+              //modificacao PPANATAL
+              $orcprojativdescricao = new cl_orcprojativdescricao();
+              $orcprojativdescricao->anousu       = $o55_anousu;
+              $orcprojativdescricao->orcprojativ  = $o55_projativ;
+              $orcprojativdescricao->excluir($anoUsu, $o55_projativ);
+              if ( $orcprojativdescricao->erro_status == 0 ) {
+                  $lSqlErro = true;
+                  $sMsgErro = $orcprojativdescricao->erro_msg;
+              }
+              
+              $orcprojativlog = new cl_orcprojativlog();
+              $orcprojativlog->anousu       = $o55_anousu;
+              $orcprojativlog->orcprojativ  = $o55_projativ;
+              $orcprojativlog->usuario      = db_getsession("DB_id_usuario");
+              $orcprojativlog->departamento = db_getsession("DB_coddepto");
+              $orcprojativlog->data         = date("Y-m-d");
+              $orcprojativlog->acao         = "E";
+              $orcprojativlog->incluir();
+    
+              $orcprojativprograma = new cl_orcprojativprograma();
+              $orcprojativprograma->excluir(null,"anousu = {$anoUsu} and orcprojativ = {$o55_projativ}");
+              if ( $orcprojativprograma->erro_status == 0 ) {
+                  $lSqlErro = true;
+                  $sMsgErro = $orcprojativprograma->erro_msg;
+                  break;
+              }
+              
+              $orcprojativabrangencia = new cl_orcprojativabrangencia();
+              $orcprojativabrangencia->excluir(null, "anousu = {$anoUsu} and orcprojativ = {$o55_projativ}");
+              if ( $orcprojativabrangencia->erro_status == 0 ) {
+                  $lSqlErro = true;
+                  $sMsgErro = $orcprojativabrangencia->erro_msg;
+              }
+              
+              $orcprojativmetas = new cl_orcprojativmetas();
+              $orcprojativmetas->excluir(null, "anousu = {$anoUsu} and orcprojativ = {$o55_projativ}");
+              if ( $orcprojativmetas->erro_status == 0 ) {
+                  $lSqlErro = true;
+                  $sMsgErro = $orcprojativmetas->erro_msg;
+              }
+              
+              $orcprojativorcunidade = new cl_orcprojativorcunidade();
+              $orcprojativorcunidade->excluir(null, "anousu = {$anoUsu} and orcprojativ = {$o55_projativ}");
+              if ( $orcprojativorcunidade->erro_status == 0 ) {
+                  $lSqlErro = true;
+                  $sMsgErro = $orcprojativorcunidade->erro_msg;
+              }
+              //fim modificacao PPANATAL
+
+              $1]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(\$digito.*;)]]></search>
+      <add>
+        <![CDATA[$1
+        
+   //modificacao PPANatal
+   $sSqlOrcProjAtivPPANatal = "select lpad(orcprograma,4,'0') as programa,
+                                      o54_descr,
+                                      case when descricao is null then '{$o55_descr}' else descricao end as o55_descr,
+                                      o40_orgao as orgao, 
+                                      o40_descr as orgao_descricao, 
+                                      o41_unidade as unidade, 
+                                      o41_descr as unidade_descricao
+                                 from orcprojativ 
+                                      left join plugins.orcprojativprograma    on orcprojativprograma.anousu        = o55_anousu
+                                                                              and orcprojativprograma.orcprojativ   = o55_projativ
+                                      left join orcprograma                    on o54_anousu                        = o55_anousu 
+                                                                              and o54_programa                      = orcprojativprograma.orcprograma
+                                      left join plugins.orcprojativdescricao   on orcprojativdescricao.anousu       = o55_anousu
+                                                                              and orcprojativdescricao.orcprojativ  = o55_projativ
+                                      left join plugins.orcprojativorcunidade  on orcprojativorcunidade.orcprojativ = o55_projativ
+                                                                              and orcprojativorcunidade.anousu      = o55_anousu
+                                      left join orcunidade                     on o41_orgao                         = orcprojativorcunidade.orcorgao    
+                                                                              and o41_unidade                       = orcprojativorcunidade.orcunidade   
+                                                                              and o41_anousu                        = orcprojativorcunidade.anousu      
+                                      left join orcorgao                       on o40_anousu                        = o41_anousu 
+                                                                              and o40_orgao                         = o41_orgao
+                                where o55_projativ = {$o55_projativ}
+                                  and o55_anousu   = {$o55_anousu}";                                  
+   $result = $clorcprojativ->sql_record($sSqlOrcProjAtivPPANatal);
+   db_fieldsmemory($result,0);
+   //fim modificacao PPANatal
+        ]]>
+      </add>
+    </operation>    
+       
+  </file>  
+  
+  <file path='forms/db_frmorcprojativ.php'>
+    <operation>
+      <search regex="true"><![CDATA[(db_input\('o55_descr'.*\))]]></search>
+      <add>
+        <![CDATA[unset($Mo55_descr);
+      $1]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[\<tr\>(\n*.*\n*.*\n*.*unidaderesp)]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+    $1]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To55_valorunidade.*>]]></search>
+      <add>
+        <![CDATA[
+  <tr>
+    <td>
+      <label for="orgao"><?php db_ancora('Órgão:', 'buscarOrgao(true)', $db_opcao, null, 'orgao_ancora'); ?></label>
+    </td>
+    <td>
+      <?php
+      $Sorgao = 'Órgão';
+      db_input('orgao', 10, 1, true, 'text', $db_opcao, 'onChange="buscarOrgao(false)"');
+      db_input('orgao_descricao', 40, 0, true, 'text', 3);
+      ?>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <label for="unidade>">
+        <?php db_ancora('Unidade:', 'buscarUnidade(true)', $db_opcao, null, 'unidade_ancora'); ?>
+      </label>
+    </td>
+    <td>
+      <?php
+      $Sunidade = 'Unidade';
+      db_input('unidade', 10, 1, true, 'text', $db_opcao, 'onChange="buscarUnidade(false)"');
+      db_input('unidade_descricao', 40, 0, true, 'text', 3);
+      ?>
+    </td>
+  </tr>
+                
+  <tr>
+    <td colspan="2">
+         <fieldset>
+           <legend> <b>Abrangência</b> </legend>
+         <table border='0' width="100%">
+           <tr>
+             <?
+               require_once ("classes/db_ppaabrangencia_classe.php");
+               $clppaabrangencia = new cl_ppaabrangencia();
+               $sCampos = (isset($o55_projativ)?"*, coalesce((select 't' from plugins.orcprojativabrangencia where orcprojativabrangencia.orcprojativ = {$o55_projativ} and orcprojativabrangencia.ppaabrangencia = ppaabrangencia.sequencial)::text,'f') as checked":"*, false as checked");
+               $rsPPAAbrangencia = $clppaabrangencia->sql_record($clppaabrangencia->sql_query_file(null, $sCampos));
+               $iQtdRegPPAAbrangencia = $clppaabrangencia->numrows; 
+               if ($iQtdRegPPAAbrangencia == 0) {
+                  echo "<td> <b>Nenhuma Abrangencia cadastrada!</b> </td> ";
+               } else {
+                 for ($iInd = 0; $iInd < $iQtdRegPPAAbrangencia; $iInd++) {
+                    $oDadosPPAAbrangencia = db_utils::fieldsMemory($rsPPAAbrangencia, $iInd);
+                    
+                    if ($iInd%5 == 0) {
+                        echo "</tr>
+                              <tr>
+                               <td> <input type='checkbox' name='abrangencia{$iInd}' id='abrangencia{$iInd}' ".($oDadosPPAAbrangencia->checked=="t"?"checked":"")." value='{$oDadosPPAAbrangencia->sequencial}' > $oDadosPPAAbrangencia->descricao </td>";
+                    } else {
+                        echo " <td> <input type='checkbox' name='abrangencia{$iInd}' id='abrangencia{$iInd}' ".($oDadosPPAAbrangencia->checked=="t"?"checked":"")." value='{$oDadosPPAAbrangencia->sequencial}' > $oDadosPPAAbrangencia->descricao </td>";
+                    }
+                 }
+               }
+             ?>
+             <input type='hidden' name='db_opcao' id='db_opcao'>
+             <input type='hidden' name='abrangencias' id='abrangencias'>
+            </tr> 
+         </table>
+         </fieldset>
+ 
+    </td>
+  </tr>
+  
+  <tr style="display: none;">
+        <td nowrap title="<?=@$To55_valorunidade?>">]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To55_especproduto.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To55_especproduto?>">]]>
+      </add>
+    </operation> 
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To55_tipoacao.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To55_tipoacao?>">]]>
+      </add>
+    </operation>   
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To55_formaimplementacao.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To55_formaimplementacao?>">]]>
+      </add>
+    </operation> 
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To55_detalhamentoimp.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To55_detalhamentoimp?>">]]>
+      </add>
+    </operation>   
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To55_origemacao.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To55_origemacao?>">]]>
+      </add>
+    </operation> 
+    <operation>
+      <search regex="true"><![CDATA[<tr>\n*.*<td.*To55_baselegal.*>]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+        <td nowrap title="<?=@$To55_baselegal?>">]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(<tr>\n*.*<td.*To55_orcproduto.*>)]]></search>
+      <add>
+        <![CDATA[
+  <!-- modificacao PPANatal -->
+  <tr>
+    <td nowrap title="Programa">
+       <?
+         db_ancora("Programa","js_pesquisaPrograma(true)",$db_opcao);
+       ?>
+    </td>
+    <td> 
+    <?
+      db_input('programa',10,1,true,'text',$db_opcao,"onChange='js_pesquisaPrograma(false);'");
+      db_input('programa_descricao',40,"",true,'text',3);
+    ?>
+    </td>
+  </tr>
+  <!-- fim modificacao PPANatal -->
+  
+  $1]]>
+      </add>
+    </operation> 
+    <operation>
+      <search regex="true"><![CDATA[(function\s*js_pesquisaProduto\s*\(.*\)\s*{)]]></search>
+      <add>
+        <![CDATA[//modificacao PPANatal
+function js_pesquisaPrograma(mostra){
+  if (mostra==true) {
+    js_OpenJanelaIframe('','db_iframe_orcprograma','func_orcprograma.php?funcao_js=parent.js_mostraPrograma1|o54_programa|o54_descr','Pesquisa',true);
+  } else {
+    js_OpenJanelaIframe('','db_iframe_orcprograma','func_orcprograma.php?pesquisa_chave='+document.form1.programa.value+'&funcao_js=parent.js_mostraPrograma','Pesquisa',false);
+  }
+}
+function js_mostraPrograma(chave,erro){
+  document.form1.programa_descricao.value = chave; 
+  if (erro==true) { 
+    document.form1.programa.focus(); 
+    document.form1.programa.value = ''; 
+  }
+}
+function js_mostraPrograma1(chave1,chave2){
+  document.form1.programa.value = chave1;
+  document.form1.programa_descricao.value = chave2;
+  db_iframe_orcprograma.hide();
+}
+
+function buscarOrgao(lMostrar) {
+
+  var sQuerySring = 'funcao_js=parent.retornoOrgao|0|2';
+  var sArquivo    = 'func_orcorgao.php';
+  var sTituloTela = 'Pesquisar Órgão';
+
+  if (!lMostrar) {
+    sQuerySring = 'pesquisa_chave=' + $F('orgao') + '&funcao_js=parent.retornoOrgaoChave';
+  }
+
+  js_OpenJanelaIframe('', 'db_iframe_orcorgao', sArquivo +'?' +sQuerySring, sTituloTela, lMostrar);
+}
+
+function retornoOrgaoChave(sDescricao, lErro) {
+
+    $('unidade').value    = '';
+    $('unidade_descricao').value = '';
+
+    if (lErro) {
+      $('orgao').value = "";  
+    }
+    $('orgao_descricao').value = sDescricao;
+    
+}
+
+function retornoOrgao(iCodigo, sDescricao, lErro) {
+
+    $('unidade').value    = '';
+    $('unidade_descricao').value = '';
+
+    $('orgao').value = iCodigo;
+    $('orgao_descricao').value = sDescricao;
+    
+    db_iframe_orcorgao.hide();
+    
+}
+
+
+function buscarUnidade(lMostrar) {
+
+  var iOrgao = $F('orgao');
+
+  if (iOrgao == '') {
+
+    alert("Para selecionar uma unidade, você deve primeiro informar o Órgão.");
+    return false;
+  }
+
+  var sQuerySring = 'orgao=' + iOrgao + '&funcao_js=parent.retornoUnidade|2|4';
+  var sArquivo    = 'func_orcunidade.php';
+  var sTituloTela = 'Pesquisar Unidade';
+
+  if (!lMostrar) {
+    sQuerySring = 'pesquisa_chave=' + $F('unidade') + '&orgao=' + iOrgao + '&funcao_js=parent.retornoUnidadeChave';
+  }
+
+  js_OpenJanelaIframe('', 'db_iframe_orcunidade', sArquivo +'?' +sQuerySring, sTituloTela, lMostrar);
+}     
+
+function retornoUnidade(iCodigo, sDescricao, lErro) {
+
+    $('unidade').value    = iCodigo;
+    $('unidade_descricao').value = sDescricao;
+    
+    db_iframe_orcunidade.hide();
+}
+
+function retornoUnidadeChave(sDescricao, lErro) {
+
+    if (lErro) {
+      $('unidade').value = "";  
+    }
+    $('unidade_descricao').value = sDescricao;
+    
+}
+
+function js_submit() {
+    
+    var aAbrangencia = $$("input[type='checkbox']");
+    var sAbrangencias = '';
+    var separador = ''; 
+    aAbrangencia.each(
+            function (aAbrangencia, iInd) {
+              if (aAbrangencia.checked == true) {
+                sAbrangencias += separador+aAbrangencia.value;
+                separador = '|';
+              }
+            }
+          );
+    $("abrangencias").value = sAbrangencias;
+    
+    if (($F('orgao') == "" || $F('unidade') == "") && <?=$db_opcao?> != 3 ) {
+      alert('Informe o Orgão e Unidade!');
+      return false;
+    }
+    
+    document.form1.submit();
+}
+//fim modificacao PPANatal
+
+$1]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(type="submit")]]></search>
+      <add>
+        <![CDATA[type="button" onclick="js_submit()"]]>
+      </add>
+    </operation>
+  </file>  
+    
+</modification>

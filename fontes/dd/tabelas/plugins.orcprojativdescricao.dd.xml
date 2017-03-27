@@ -1,0 +1,53 @@
+<?xml version="1.0" standalone="yes" ?>
+<table name="plugins.orcprojativdescricao" description="Descricao do Projeto/Atividade" prefix="" label="Descricao do Projeto/Atividade" type="0">
+ <fields>
+    <field name="anousu"
+           conteudo="int4"
+           description="Exercício"
+           inivalue="0"
+           label="Exercício"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Exercício"
+           reference=""
+           ispk="t"
+           hassequence="f">
+    </field>
+    <field name="orcprojativ"
+           conteudo="int4"
+           description="Projeto/Atividade"
+           inivalue="0"
+           label="Projeto/Atividade"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Projeto/Atividade"
+           reference=""
+           ispk="t"
+           hassequence="f">
+    </field>    
+    <field name="descricao"
+           conteudo="varchar"
+           description="Descrição"
+           inivalue="0"
+           label="Descrição"
+           size="50"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="0"
+           tipoobj="text"
+           labelrel="Descrição"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>
+  </fields>
+</table>

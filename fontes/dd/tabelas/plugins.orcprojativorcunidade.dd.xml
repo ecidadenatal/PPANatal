@@ -1,0 +1,89 @@
+<?xml version="1.0" standalone="yes" ?>
+<table name="plugins.orcprojativorcunidade" description="Orgao/Unidade do Projeto/Atividade" prefix="" label="Orgao/Unidade do Projeto/Atividade" type="0">
+ <fields>
+    <field name="sequencial"
+           conteudo="int4"
+           description="Sequencial"
+           inivalue="0"
+           label="Sequencial"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Sequencial"
+           reference=""
+           ispk="t"
+           hassequence="t">
+      <sequence name="plugins.orcprojativorcunidade_sequencial_seq"></sequence>
+    </field>       
+    <field name="anousu"
+           conteudo="int4"
+           description="Exercício"
+           inivalue="0"
+           label="Exercício"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Exercício"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>
+    <field name="orcprojativ"
+           conteudo="int4"
+           description="Projeto/Atividade"
+           inivalue="0"
+           label="Projeto/Atividade"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Projeto/Atividade"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>    
+    <field name="orcorgao"
+           conteudo="int4"
+           description="Orgao"
+           inivalue="0"
+           label="Orgao"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Orgao"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>
+    <field name="orcunidade"
+           conteudo="int4"
+           description="Unidade"
+           inivalue="0"
+           label="Unidade"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Unidade"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>    
+  </fields>
+  <primarykey>
+    <fieldpk name="sequencial"></fieldpk>
+  </primarykey>
+</table>

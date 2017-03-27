@@ -1,0 +1,73 @@
+<?xml version="1.0" standalone="yes" ?>
+<table name="plugins.orcprojativabrangencia" description="Abrangencia do Projeto/Atividade" prefix="" label="Abrangencia do Projeto/Atividade" type="0">
+ <fields>
+    <field name="sequencial"
+           conteudo="int4"
+           description="Sequencial"
+           inivalue="0"
+           label="Sequencial"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Sequencial"
+           reference=""
+           ispk="t"
+           hassequence="t">
+      <sequence name="plugins.orcprojativabrangencia_sequencial_seq"></sequence>
+    </field>       
+    <field name="anousu"
+           conteudo="int4"
+           description="Exercício"
+           inivalue="0"
+           label="Exercício"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Exercício"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>
+    <field name="orcprojativ"
+           conteudo="int4"
+           description="Projeto/Atividade"
+           inivalue="0"
+           label="Projeto/Atividade"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Projeto/Atividade"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>    
+    <field name="ppaabrangencia"
+           conteudo="int4"
+           description="Abrangencia"
+           inivalue="0"
+           label="Abrangencia"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Abrangencia"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>
+  </fields>
+  <primarykey>
+    <fieldpk name="sequencial"></fieldpk>
+  </primarykey>
+</table>

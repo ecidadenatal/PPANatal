@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <plugin name="PPANatal" label="PPANatal" plugin-version="1.0" ecidade-version="2.3.39" id-modulo="116">
+    <id id="PPANatal"> </id>
+    <files>
+    <!-- programas -->
+    <file name="orc1_orcprograma002_ppanatal.php"            path="/orc1_orcprograma002_ppanatal.php" />
+    <file name="orc1_orcprograma012_ppanatal.php"            path="/orc1_orcprograma012_ppanatal.php" />
+    
+    <file name="orc1_orcprojativdetalhamentorecursos001.php" path="/orc1_orcprojativdetalhamentorecursos001.php" />
+    <file name="orc1_orcprojativmetas001.php"                path="/orc1_orcprojativmetas001.php" />
+    
+    <file name="orc1_ppaabrangencia001.php"                  path="/orc1_ppaabrangencia001.php" />
+    <file name="orc1_ppaabrangencia002.php"                  path="/orc1_ppaabrangencia002.php" />
+    <file name="orc1_ppaabrangencia003.php"                  path="/orc1_ppaabrangencia003.php" />
+                                                             
+    <file name="orc1_ppafontesrecurso001.php"                path="/orc1_ppafontesrecurso001.php" />
+    <file name="orc1_ppafontesrecurso002.php"                path="/orc1_ppafontesrecurso002.php" />
+    <file name="orc1_ppafontesrecurso003.php"                path="/orc1_ppafontesrecurso003.php" />
+                                                             
+    <file name="func_ppaabrangencia.php"                     path="/func_ppaabrangencia.php" />
+    <file name="func_ppafontesrecurso.php"                   path="/func_ppafontesrecurso.php" />
+                                                             
+    <!--  forms -->                                          
+    <file name="db_frmorcprograma_ppanatal.php"              path="/forms/db_frmorcprograma_ppanatal.php" />
+    <file name="db_frmppaabrangencia.php"                    path="/forms/db_frmppaabrangencia.php" />
+    <file name="db_frmppafontesrecurso.php"                  path="/forms/db_frmppafontesrecurso.php" />
+    
+    <!-- classes -->
+    <file name="db_orcprogramaeixo_classe.php"                 path="/classes/db_orcprogramaeixo_classe.php" />
+    <file name="db_orcprogramaindicadores_classe.php"          path="/classes/db_orcprogramaindicadores_classe.php" />
+    <file name="db_orcprojativabrangencia_classe.php"          path="/classes/db_orcprojativabrangencia_classe.php" />
+    <file name="db_orcprojativprograma_classe.php"             path="/classes/db_orcprojativprograma_classe.php" />
+    <file name="db_orcprojativlog_classe.php"                  path="/classes/db_orcprojativlog_classe.php" />
+    <file name="db_ppaabrangencia_classe.php"                  path="/classes/db_ppaabrangencia_classe.php" />
+    <file name="db_ppafontesrecurso_classe.php"                path="/classes/db_ppafontesrecurso_classe.php" />
+    <file name="db_orcprojativdetalhamentorecursos_classe.php" path="/classes/db_orcprojativdetalhamentorecursos_classe.php" />
+    <file name="db_orcprojativmetas_classe.php"                path="/classes/db_orcprojativmetas_classe.php" /> 
+    <file name="db_orcprojativorcunidade_classe.php"           path="/classes/db_orcprojativorcunidade_classe.php" />
+    
+    <!-- modification -->
+    <file name="PPANatal.xml"                                   path="/modification/xml/PPANatal.xml" />
+    
+    <!-- estrutura tabelas xml -->
+    <file name="plugins.orcprogramaeixo.dd.xml"                 path="/dd/tabelas/plugins.orcprogramaeixo.dd.xml" />
+    <file name="plugins.orcprogramaindicadores.dd.xml"          path="/dd/tabelas/plugins.orcprogramaindicadores.dd.xml" />
+    <file name="plugins.orcprojativabrangencia.dd.xml"          path="/dd/tabelas/plugins.orcprojativabrangencia.dd.xml" />
+    <file name="plugins.orcprojativprograma.dd.xml"             path="/dd/tabelas/plugins.orcprojativprograma.dd.xml" />
+    <file name="plugins.orcprojativlog.dd.xml"                  path="/dd/tabelas/plugins.orcprojativlog.dd.xml" />
+    <file name="plugins.ppaabrangencia.dd.xml"                  path="/dd/tabelas/plugins.ppaabrangencia.dd.xml" />
+    <file name="plugins.ppafontesrecurso.dd.xml"                path="/dd/tabelas/plugins.ppafontesrecurso.dd.xml" />
+    <file name="plugins.orcprojativdetalhamentorecursos.dd.xml" path="/dd/tabelas/plugins.orcprojativdetalhamentorecursos.dd.xml"/>
+    <file name="plugins.orcprojativmetas.dd.xml"                path="/dd/tabelas/plugins.orcprojativmetas.dd.xml" />
+    <file name="plugins.orcprojativorcunidade.dd.xml"           path="/dd/tabelas/plugins.orcprojativorcunidade.dd.xml" />
+    
+        
+    </files>
+    
+     <menus>
+      <menu type="1">
+        <item name="PPANatal" file="" liberado-cliente="true" >
+          <item name="Fontes de Recurso" file="" liberado-cliente="true">
+            <item name="Incluir" file="orc1_ppafontesrecurso001.php" liberado-cliente="true" />
+            <item name="Alterar" file="orc1_ppafontesrecurso002.php" liberado-cliente="true" />
+            <item name="Excluir" file="orc1_ppafontesrecurso003.php" liberado-cliente="true" />
+          </item>  
+          <item name="Abrangencias" file="" liberado-cliente="true">
+            <item name="Incluir" file="orc1_ppaabrangencia001.php" liberado-cliente="true" />
+            <item name="Alterar" file="orc1_ppaabrangencia002.php" liberado-cliente="true" />
+            <item name="Excluir" file="orc1_ppaabrangencia003.php" liberado-cliente="true" />
+          </item>
+        </item>
+      </menu>
+    </menus>
+    
+    <estrutura install="/instalacao.sql" uninstall="/desinstalacao.sql" >
+    </estrutura>
+  </plugin>
+</manifest>
