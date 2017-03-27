@@ -821,7 +821,7 @@ function js_novoCadastro() {
     <operation>
       <search regex="true"><![CDATA[(db_input\('o55_descr'.*\))]]></search>
       <add>
-        <![CDATA[unset($Mo55_descr);
+        <![CDATA[$Mo55_descr = 150;
       $1]]>
       </add>
     </operation>
