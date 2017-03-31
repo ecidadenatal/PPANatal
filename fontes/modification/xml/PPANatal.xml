@@ -445,6 +445,38 @@ function js_novoCadastro() {
 <script language="JavaScript" type="text/javascript" src="scripts/prototype.js"></script>]]>
       </add>
     </operation>
+    
+    <operation>
+      <search regex="true"><![CDATA[(\$o55_projativ.*\+=.*digito.*)]]></search>
+      <add>
+        <![CDATA[ $aCodigosExistentes = array();
+  $aTodos = array();
+  $aCodigosLivres = array();
+
+  if(empty($o55_projativ) || $o55_projativ == "") {
+    $sSqlMaiorCodigo = "select max(o55_projativ) from orcprojativ where o55_anousu = ".db_getsession("DB_anousu")." and substr(CAST(o55_projativ AS TEXT), 1, 1) = '".substr($digito, 0, 1)."'";
+
+    //Lista todos os códigos de projativ já existentes
+    $sSqlListaCodigos = "select o55_projativ from orcprojativ where o55_anousu = ".db_getsession("DB_anousu")." and substr(CAST(o55_projativ AS TEXT), 1, 1) = '".substr($digito, 0, 1)."'";
+    $rsListaCodigos = db_query($sSqlListaCodigos);
+    $aCodigosExistentes = pg_fetch_all_columns($rsListaCodigos);
+
+    //Cria um range de todos os códigos possíveis começando com o dígito do tipo selecionado
+    $aTodos = range($digito, $digito+999, 1);
+
+    //Pega todos os códigos que não estão sendo usados ainda
+    $aCodigosLivres = array_diff($aTodos, $aCodigosExistentes);
+
+    //Define o55_projativ como o próximo código livre
+    reset($aCodigosLivres);
+    $o55_projativ = $aCodigosLivres[key($aCodigosLivres)];
+  
+  } else {
+    $o55_projativ += $digito;
+  }]]>
+      </add>
+    </operation>
+
     <operation>
       <search regex="true"><![CDATA[(if\s*\(\s*\!\$lSqlErro\s*\&\&)]]></search>
       <add>
@@ -873,7 +905,7 @@ function js_novoCadastro() {
              <?
                require_once ("classes/db_ppaabrangencia_classe.php");
                $clppaabrangencia = new cl_ppaabrangencia();
-               $sCampos = (isset($o55_projativ)?"*, coalesce((select 't' from plugins.orcprojativabrangencia where orcprojativabrangencia.orcprojativ = {$o55_projativ} and orcprojativabrangencia.ppaabrangencia = ppaabrangencia.sequencial)::text,'f') as checked":"*, false as checked");
+               $sCampos = (isset($o55_projativ)?"*, coalesce((select 't' from plugins.orcprojativabrangencia where orcprojativabrangencia.orcprojativ = {$o55_projativ} and orcprojativabrangencia.ppaabrangencia = ppaabrangencia.sequencial and plugins.orcprojativabrangencia.anousu = ".db_getsession('DB_anousu').")::text,'f') as checked":"*, false as checked");
                $rsPPAAbrangencia = $clppaabrangencia->sql_record($clppaabrangencia->sql_query_file(null, $sCampos));
                $iQtdRegPPAAbrangencia = $clppaabrangencia->numrows; 
                if ($iQtdRegPPAAbrangencia == 0) {
@@ -1103,6 +1135,14 @@ $1]]>
         <![CDATA[type="button" onclick="js_submit()"]]>
       </add>
     </operation>
+    <operation>
+      <search regex="true"><![CDATA[(<\/script>)]]></search>
+      <add>
+        <![CDATA[js_pesquisaPrograma(false);
+        $1]]>
+      </add>
+    </operation>
+    
   </file>  
     
 </modification>
