@@ -472,7 +472,7 @@ function js_novoCadastro() {
       if ($orgao != "") {
     
         $orcprojativorcunidade = new cl_orcprojativorcunidade();
-        $orcprojativorcunidade->anousu      = $o55_anousu;
+        $orcprojativorcunidade->anousu      = $iAno;
         $orcprojativorcunidade->orcprojativ = $o55_projativ;
         $orcprojativorcunidade->orcorgao       = $orgao;
         $orcprojativorcunidade->orcunidade     = $unidade;
