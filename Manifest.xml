@@ -37,6 +37,9 @@
     <file name="db_orcprojativdetalhamentorecursos_classe.php" path="/classes/db_orcprojativdetalhamentorecursos_classe.php" />
     <file name="db_orcprojativmetas_classe.php"                path="/classes/db_orcprojativmetas_classe.php" /> 
     <file name="db_orcprojativorcunidade_classe.php"           path="/classes/db_orcprojativorcunidade_classe.php" />
+    <file name="db_orcprojativorigem_classe.php"               path="/classes/db_orcprojativorigem_classe.php" />
+    <file name="db_orcprojativdescricao_classe.php"            path="/classes/db_orcprojativdescricao_classe.php" />
+    
     
     <!-- modification -->
     <file name="PPANatal.xml"                                   path="/modification/xml/PPANatal.xml" />
@@ -52,6 +55,8 @@
     <file name="plugins.orcprojativdetalhamentorecursos.dd.xml" path="/dd/tabelas/plugins.orcprojativdetalhamentorecursos.dd.xml"/>
     <file name="plugins.orcprojativmetas.dd.xml"                path="/dd/tabelas/plugins.orcprojativmetas.dd.xml" />
     <file name="plugins.orcprojativorcunidade.dd.xml"           path="/dd/tabelas/plugins.orcprojativorcunidade.dd.xml" />
+    <file name="plugins.orcprojativorigem.dd.xml"               path="/dd/tabelas/plugins.orcprojativorigem.dd.xml" />
+    <file name="plugins.orcprojativdescricao.dd.xml"               path="/dd/tabelas/plugins.orcprojativdescricao.dd.xml" />
     
         
     </files>

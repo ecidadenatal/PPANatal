@@ -34,3 +34,4 @@ DROP SEQUENCE plugins.orcprojativorcunidade_sequencial_seq;
 
 DROP TABLE plugins.orcprojativdescricao;
 
+DROP TABLE plugins.orcprojativorigem;

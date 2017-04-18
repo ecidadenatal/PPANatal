@@ -35,3 +35,5 @@ CREATE TABLE plugins.orcprojativorcunidade (sequencial integer, anousu integer, 
 CREATE SEQUENCE plugins.orcprojativorcunidade_sequencial_seq;
 
 CREATE TABLE plugins.orcprojativdescricao (anousu integer, orcprojativ integer, descricao varchar(250), PRIMARY KEY (anousu,orcprojativ));
+
+CREATE TABLE plugins.orcprojativorigem (anousu integer, orcprojativ integer, origem varchar(100), PRIMARY KEY (anousu,orcprojativ));

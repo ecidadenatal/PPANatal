@@ -490,6 +490,16 @@ function js_novoCadastro() {
       if ( $orcprojativdescricao->erro_status == 0 ) {
          $lSqlErro = true;
          $sMsgErro = $orcprojativdescricao->erro_msg;
+      }
+      
+      $orcprojativorigem = new cl_orcprojativorigem();
+      $orcprojativorigem->anousu       = $iAno;
+      $orcprojativorigem->orcprojativ  = $o55_projativ;
+      $orcprojativorigem->origem       = $origem;
+      $orcprojativorigem->incluir($iAno, $o55_projativ);
+      if ( $orcprojativorigem->erro_status == 0 ) {
+         $lSqlErro = true;
+         $sMsgErro = $orcprojativorigem->erro_msg;
       }      
       
       $orcprojativlog = new cl_orcprojativlog();
@@ -605,6 +615,16 @@ function js_novoCadastro() {
         $lSqlErro = true;
         $sMsgErro = $orcprojativdescricao->erro_msg;
     }
+    
+    $orcprojativorigem = new cl_orcprojativorigem();
+    $orcprojativorigem->anousu       = $o55_anousu;
+    $orcprojativorigem->orcprojativ  = $o55_projativ;
+    $orcprojativorigem->origem    = $origem;
+    $orcprojativorigem->alterar($o55_anousu, $o55_projativ);
+    if ( $orcprojativorigem->erro_status == 0 ) {
+        $lSqlErro = true;
+        $sMsgErro = $orcprojativorigem->erro_msg;
+    }
                 
     $orcprojativlog = new cl_orcprojativlog();
     $orcprojativlog->anousu       = $o55_anousu;
@@ -691,6 +711,7 @@ function js_novoCadastro() {
    $sSqlOrcProjAtivPPANatal = "select lpad(orcprograma,4,'0') as programa,
                                       o54_descr,
                                       case when descricao is null then '{$o55_descr}' else descricao end as o55_descr,
+                                      origem,
                                       o40_orgao as orgao, 
                                       o40_descr as orgao_descricao, 
                                       o41_unidade as unidade, 
@@ -702,6 +723,8 @@ function js_novoCadastro() {
                                                                               and o54_programa                      = orcprojativprograma.orcprograma
                                       left join plugins.orcprojativdescricao   on orcprojativdescricao.anousu       = o55_anousu
                                                                               and orcprojativdescricao.orcprojativ  = o55_projativ
+                                      left join plugins.orcprojativorigem      on orcprojativorigem.anousu          = o55_anousu
+                                                                              and orcprojativorigem.orcprojativ     = o55_projativ                                                                              
                                       left join plugins.orcprojativorcunidade  on orcprojativorcunidade.orcprojativ = o55_projativ
                                                                               and orcprojativorcunidade.anousu      = o55_anousu
                                       left join orcunidade                     on o41_orgao                         = orcprojativorcunidade.orcorgao    
@@ -761,12 +784,21 @@ function js_novoCadastro() {
         <![CDATA[
               //modificacao PPANATAL
               $orcprojativdescricao = new cl_orcprojativdescricao();
-              $orcprojativdescricao->anousu       = $o55_anousu;
+              $orcprojativdescricao->anousu       = $anoUsu;
               $orcprojativdescricao->orcprojativ  = $o55_projativ;
               $orcprojativdescricao->excluir($anoUsu, $o55_projativ);
               if ( $orcprojativdescricao->erro_status == 0 ) {
                   $lSqlErro = true;
                   $sMsgErro = $orcprojativdescricao->erro_msg;
+              }
+              
+              $orcprojativorigem = new cl_orcprojativorigem();
+              $orcprojativorigem->anousu       = $anoUsu;
+              $orcprojativorigem->orcprojativ  = $o55_projativ;
+              $orcprojativorigem->excluir($anoUsu, $o55_projativ);
+              if ( $orcprojativorigem->erro_status == 0 ) {
+                  $lSqlErro = true;
+                  $sMsgErro = $orcprojativorigem->erro_msg;
               }
               
               $orcprojativlog = new cl_orcprojativlog();
@@ -895,6 +927,22 @@ function js_novoCadastro() {
       ?>
     </td>
   </tr>
+  
+  <tr>
+    <td>
+      <label for="origem>">
+        <b>Origem: </b>
+      </label>
+    </td>
+    <td>
+      <?php
+      $aOrigem = array("SOCIEDADE"                 => "SOCIEDADE",                 
+                       "PODER PÚBLICO"             => "PODER PÚBLICO",            
+                       "SOCIEDADE E PODER PÚBLICO" => "SOCIEDADE E PODER PÚBLICO");
+      db_select("origem", $aOrigem, true, $db_opcao);
+      ?>
+    </td>
+  </tr>  
                 
   <tr>
     <td colspan="2">
