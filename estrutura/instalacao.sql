@@ -28,7 +28,7 @@ CREATE TABLE plugins.orcprojativdetalhamentorecursos (sequencial integer, anousu
 CREATE SEQUENCE plugins.orcprojativdetalhamentorecursos_sequencial_seq;
 CREATE UNIQUE INDEX orcprojativdetalhamentorecursos_orcprojativ_anousu_ppafonterecurso_in on plugins.orcprojativdetalhamentorecursos(orcprojativ,anousu,ppafonterecurso);
 
-CREATE TABLE plugins.orcprojativmetas (sequencial integer, anousu integer, orcprojativ integer, meta text, usuario integer, departamento integer, data date, PRIMARY KEY (sequencial));
+CREATE TABLE plugins.orcprojativmetas (sequencial integer, anousu integer, orcprojativ integer, meta text, unidademedida text, usuario integer, departamento integer, data date, PRIMARY KEY (sequencial));
 CREATE SEQUENCE plugins.orcprojativmetas_sequencial_seq;
 
 CREATE TABLE plugins.orcprojativorcunidade (sequencial integer, anousu integer, orcprojativ integer, orcorgao integer, orcunidade integer, PRIMARY KEY (sequencial));

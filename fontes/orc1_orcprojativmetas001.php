@@ -41,13 +41,14 @@ db_postmemory ( $HTTP_POST_VARS );
 if (isset ( $incluir )) {
 		
 	db_inicio_transacao ();
-	$clorcprojativmetas->sequencial   = null;
-	$clorcprojativmetas->orcprojativ  = $codprojativ;
-	$clorcprojativmetas->anousu       = $anousu;
-	$clorcprojativmetas->meta         = $meta;
-	$clorcprojativmetas->usuario      = db_getsession("DB_id_usuario");
-	$clorcprojativmetas->departamento = db_getsession("DB_coddepto");
-	$clorcprojativmetas->data         = date("Y-m-d",db_getsession("DB_datausu")); 
+	$clorcprojativmetas->sequencial    = null;
+	$clorcprojativmetas->orcprojativ   = $codprojativ;
+	$clorcprojativmetas->anousu        = $anousu;
+	$clorcprojativmetas->meta          = $meta;
+	$clorcprojativmetas->unidademedida = $unidademedida;
+	$clorcprojativmetas->usuario       = db_getsession("DB_id_usuario");
+	$clorcprojativmetas->departamento  = db_getsession("DB_coddepto");
+	$clorcprojativmetas->data          = date("Y-m-d",db_getsession("DB_datausu")); 
     $clorcprojativmetas->incluir ( null );
     $erro_msg = $clorcprojativmetas->erro_msg;
     if ($clorcprojativmetas->erro_status == 0) {
@@ -68,7 +69,7 @@ if (isset ( $incluir )) {
 		
 	  db_inicio_transacao ();
 	  
-	  $sSqlUpdate  = "update plugins.orcprojativmetas set meta = '{$meta}' "; 
+	  $sSqlUpdate  = "update plugins.orcprojativmetas set meta = '{$meta}', unidademedida = '".pg_escape_string($unidademedida)."' "; 
 	  $sSqlUpdate .= " where sequencial = {$sequencial} ";
 	  $rsUpdate = db_query($sSqlUpdate);
 	  if ($rsUpdate) {
@@ -124,8 +125,9 @@ if (isset($db_opcaoal)) {
 	$db_opcao = 1;
 	$db_botao=true;
 	if(isset($novo) || isset($alterar) ||   isset($excluir) || (isset($incluir) && $sqlerro==false ) ){
-		$sequencial = "";
-		$meta       = "";
+		$sequencial    = "";
+		$meta          = "";
+		$unidademedida = "";
 	}
 
 }
@@ -167,6 +169,14 @@ if (isset($db_opcaoal)) {
            <? db_textarea('meta',2,50,0,true,'text',$db_opcao); ?> 
           </td>
         </tr>
+        <tr>
+          <td nowrap title="Unidade de Medida">
+            <b>Unidade de Medida: </b> 
+          </td>
+          <td>
+           <? db_textarea('unidademedida',2,50,0,true,'text',$db_opcao); ?> 
+          </td>
+        </tr>
       </table>
       </fieldset>  
      
@@ -186,7 +196,7 @@ if (isset($db_opcaoal)) {
 	      $chavepri= array("sequencial"=>@$sequencial);
 	      $cliframe_alterar_excluir->chavepri=$chavepri;
 	      $cliframe_alterar_excluir->sql     = $clorcprojativmetas->sql_query(null,"*",null,"orcprojativ=$codprojativ and anousu = {$anousu}");
-	      $cliframe_alterar_excluir->campos  ="sequencial, meta";
+	      $cliframe_alterar_excluir->campos  ="sequencial, meta, unidademedida";
 	      $cliframe_alterar_excluir->legenda="Metas cadastradas";
 	      $cliframe_alterar_excluir->iframe_height ="160";
 	      $cliframe_alterar_excluir->iframe_width ="700";

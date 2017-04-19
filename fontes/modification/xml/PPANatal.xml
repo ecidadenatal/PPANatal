@@ -890,12 +890,19 @@ function js_novoCadastro() {
       </add>
     </operation>
     <operation>
-      <search regex="true"><![CDATA[\<tr\>(\n*.*\n*.*\n*.*unidaderesp)]]></search>
+      <search regex="true"><![CDATA[<tr>\n*.*(<td.*To55_descrunidade)]]></search>
       <add>
         <![CDATA[<tr style="display: none;">
     $1]]>
       </add>
     </operation>
+    <operation>
+      <search regex="true"><![CDATA[\<tr\>(\n*.*\n*.*\n*.*unidaderesp)]]></search>
+      <add>
+        <![CDATA[<tr style="display: none;">
+    $1]]>
+      </add>
+    </operation>    
     <operation>
       <search regex="true"><![CDATA[<tr>\n*.*<td.*To55_valorunidade.*>]]></search>
       <add>

@@ -66,6 +66,22 @@
            ispk="f"
            hassequence="f">
     </field>
+    <field name="unidademedida"
+           conteudo="text"
+           description="Unidade de Medida"
+           inivalue="0"
+           label="Unidade de Medida"
+           size="500"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="0"
+           tipoobj="text"
+           labelrel="Unidade de Medida"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>    
     <field name="usuario"
            conteudo="text"
            description="usuario"
