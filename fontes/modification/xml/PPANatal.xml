@@ -1200,4 +1200,225 @@ $1]]>
     
   </file>  
     
+  <file path='forms/db_frmorcindica.php'>
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcindica.*label.*;)]]></search>
+      <add>
+        <![CDATA[$1
+$anousu  = db_getsession("DB_anousu");
+$dataatual = $anousu."-".date("m-d",db_getsession("DB_datausu"));
+
+$dt = split('-',$dataatual);
+$data_dia   = $dt[2]; 
+$data_mes = $dt[1];
+$data_ano  = $dt[0];]]>
+      </add>
+    </operation>
+    
+    <operation>
+      <search regex="true"><![CDATA[(<\/table>)]]></search>
+      <add>
+        <![CDATA[   <tr>
+      <td nowrap title="Programa">
+         <?
+           db_ancora("Programa","js_pesquisaPrograma(true)",$db_opcao);
+         ?>
+      </td>
+      <td> 
+      <?
+        if(isset($db_opcao) && ($db_opcao == 22 || $db_opcao == 2)) { 
+          $rsorcindicaprograma = $clorcindicaprograma->sql_record($clorcindicaprograma->sql_query(null, "*", null, "o18_orcindica = {$o10_indica} and o18_anousu = ".db_getsession("DB_anousu")));
+          $oOrcIndicaPrograma = db_utils::fieldsMemory($rsorcindicaprograma, 0);
+          $programa = $oOrcIndicaPrograma->o18_orcprograma;
+          $programa_descricao = $oOrcIndicaPrograma->o54_descr;
+        }
+        db_input('programa',10,1,true,'text',$db_opcao,"onChange='js_pesquisaPrograma(false);'");
+        db_input('programa_descricao',35,"",true,'text',3);
+      ?>
+        </td>
+      </tr>
+      <tr>
+      <td nowrap align="left"><b>Data Apuração:</b></td>
+      <td colspan="2">
+        <?
+          if(isset($db_opcao) && ($db_opcao == 22 || $db_opcao == 2)) { 
+            $rsorcindicadados = $clorcindicaprograma->sql_record($clorcindicadados->sql_query(null, "*", null, "orcindica = {$o10_indica}"));
+            $oOrcIndicaDados = db_utils::fieldsMemory($rsorcindicadados, 0);
+            $dataapuracao = $oOrcIndicaDados->dataapuracao;
+
+            $dt = split('-',$dataapuracao);
+        $data_dia   = $dt[2]; 
+        $data_mes = $dt[1];
+        $data_ano  = $dt[0]; 
+          }
+          db_inputdata('dataapuracao',@$data_dia,@$data_mes,@$data_ano,true,'text',1);  
+        ?>
+      </td>
+    </tr> 
+  $1]]>
+      </add>
+    </operation>
+
+    <operation>
+      <search regex="true"><![CDATA[(<\/script>)]]></search>
+      <add>
+        <![CDATA[function js_pesquisaPrograma(mostra){
+  if (mostra==true) {
+    js_OpenJanelaIframe('','db_iframe_orcprograma','func_orcprograma.php?funcao_js=parent.js_mostraPrograma1|o54_programa|o54_descr','Pesquisa',true);
+  } else {
+    js_OpenJanelaIframe('','db_iframe_orcprograma','func_orcprograma.php?pesquisa_chave='+document.form1.programa.value+'&funcao_js=parent.js_mostraPrograma','Pesquisa',false);
+  }
+}
+function js_mostraPrograma(chave,erro){
+  document.form1.programa_descricao.value = chave; 
+  if (erro==true) { 
+    document.form1.programa.focus(); 
+    document.form1.programa.value = ''; 
+  }
+}
+function js_mostraPrograma1(chave1,chave2){
+  document.form1.programa.value = chave1;
+  document.form1.programa_descricao.value = chave2;
+  db_iframe_orcprograma.hide();
+}
+$1]]>
+      </add>
+    </operation>
+  </file>
+    
+  <file path='orc1_orcindica011.php'>
+    <operation>
+      <search regex="true"><![CDATA[(include.*forms\/db_frmorcindica.*;)]]></search>
+      <add>
+        <![CDATA[include(modification("forms/db_frmorcindica.php"));]]>
+      </add>
+    </operation>
+
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcindica.*cl_orcindica\(\);)]]></search>
+      <add>
+        <![CDATA[$1
+$clorcprograma = new cl_orcprograma(); 
+$clorcindicaprograma = new cl_orcindicaprograma(); 
+$clorcindicadados    = db_utils::getDao("orcindicadados");]]>
+      </add>
+    </operation>
+    
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcindica.*incluir.*\$o10_indica.*;)]]></search>
+      <add>
+        <![CDATA[$1
+  $sSqlUltimoAno = "select max(o54_anousu) as anomaximo from orcprograma";
+  $rsUltimoAno   = $clorcprograma->sql_record($sSqlUltimoAno);
+  $iUltimoAno    = db_utils::fieldsMemory($rsUltimoAno, 0)->anomaximo;
+  for ($iAno = db_getsession("DB_anousu");$iAno <= $iUltimoAno; $iAno++) {  
+    
+    $clorcindicaprograma->o18_anousu      = $iAno;
+    $clorcindicaprograma->o18_orcindica   = $o10_indica;
+    $clorcindicaprograma->o18_orcprograma = $programa;
+    $clorcindicaprograma->incluir(null);
+    $sErroMsg = $clorcindicaprograma->erro_msg;    
+    if ( $clorcindicaprograma->erro_status == 0 ) {
+      $lSqlErro = true;
+    }
+  }
+
+  $clorcindicadados->orcindica = $o10_indica;
+  $clorcindicadados->anousu = db_getsession("DB_anousu");
+  $clorcindicadados->dataapuracao = $dataapuracao;
+  $clorcindicadados->incluir(null);
+  $sErroMsg = $clorcindicadados->erro_msg;    
+  if ( $clorcindicadados->erro_status == 0 ) {
+    $lSqlErro = true;
+  }]]>
+      </add>
+    </operation>
+  </file>
+
+  <file path='orc1_orcindica012.php'>
+    <operation>
+      <search regex="true"><![CDATA[(include.*forms\/db_frmorcindica.*;)]]></search>
+      <add>
+        <![CDATA[include(modification("forms/db_frmorcindica.php"));]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcindica.*cl_orcindica;)]]></search>
+      <add>
+        <![CDATA[$1
+$clorcprograma = new cl_orcprograma(); 
+$clorcindicaprograma = new cl_orcindicaprograma(); 
+$clorcindicadados    = db_utils::getDao("orcindicadados");]]>
+      </add>
+    </operation>
+    
+    <operation>
+      <search regex="true"><![CDATA[(\$clorcindica.*alterar.*\$o10_indica.*;)]]></search>
+      <add>
+        <![CDATA[$1
+  $rsorcindicaprograma = $clorcindicaprograma->sql_record($clorcindicaprograma->sql_query(null, "*", null, "o18_orcindica = {$o10_indica}"));
+
+  if(pg_num_rows($rsorcindicaprograma) > 0) {
+
+    for ($i = 0;$i < pg_num_rows($rsorcindicaprograma); $i++) {  
+      
+      $oOrcIndicaPrograma = db_utils::fieldsMemory($rsorcindicaprograma, $i);
+
+      $clorcindicaprograma->o18_sequencial  = $oOrcIndicaPrograma->o18_sequencial;
+      $clorcindicaprograma->o18_anousu      = $oOrcIndicaPrograma->o18_anousu;
+      $clorcindicaprograma->o18_orcindica   = $oOrcIndicaPrograma->o18_orcindica;
+      $clorcindicaprograma->o18_orcprograma = $programa;
+      $clorcindicaprograma->alterar($clorcindicaprograma->o18_sequencial);
+      $sErroMsg = $clorcindicaprograma->erro_msg;    
+      if ( $clorcindicaprograma->erro_status == 0 ) {
+        $lSqlErro = true;
+      }
+    }
+  } else {
+
+    $sSqlUltimoAno = "select max(o54_anousu) as anomaximo from orcprograma";
+    $rsUltimoAno   = $clorcprograma->sql_record($sSqlUltimoAno);
+    $iUltimoAno    = db_utils::fieldsMemory($rsUltimoAno, 0)->anomaximo;
+    for ($iAno = db_getsession("DB_anousu");$iAno <= $iUltimoAno; $iAno++) {  
+      
+      $clorcindicaprograma->o18_anousu      = $iAno;
+      $clorcindicaprograma->o18_orcindica   = $o10_indica;
+      $clorcindicaprograma->o18_orcprograma = $programa;
+      $clorcindicaprograma->incluir(null);
+      $sErroMsg = $clorcindicaprograma->erro_msg;    
+      if ( $clorcindicaprograma->erro_status == 0 ) {
+        $lSqlErro = true;
+      }
+    }
+  }
+
+  $rsorcindicadados = $clorcindicaprograma->sql_record($clorcindicadados->sql_query(null, "*", null, "orcindica = {$o10_indica}"));
+
+  if (pg_num_rows($rsorcindicadados) > 0) {
+    $oOrcIndicaDados = db_utils::fieldsMemory($rsorcindicadados, 0);
+
+    $clorcindicadados->sequencial = $oOrcIndicaDados->sequencial;
+    $clorcindicadados->orcindica = $oOrcIndicaDados->orcindica;
+    $clorcindicadados->anousu = $oOrcIndicaDados->anousu;
+    $clorcindicadados->dataapuracao = $dataapuracao;
+    $clorcindicadados->alterar($clorcindicadados->sequencial);
+    $sErroMsg = $clorcindicadados->erro_msg;    
+    if ( $clorcindicadados->erro_status == 0 ) {
+      $lSqlErro = true;
+    }
+  } else {
+
+    $clorcindicadados->orcindica = $o10_indica;
+    $clorcindicadados->anousu = db_getsession("DB_anousu");
+    $clorcindicadados->dataapuracao = $dataapuracao;
+    $clorcindicadados->incluir(null);
+    $sErroMsg = $clorcindicadados->erro_msg;    
+    if ( $clorcindicadados->erro_status == 0 ) {
+      $lSqlErro = true;
+    }
+  }]]>
+      </add>
+    </operation>
+  </file>
+
 </modification>

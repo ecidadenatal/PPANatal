@@ -1,0 +1,73 @@
+<?xml version="1.0" standalone="yes" ?>
+<table name="plugins.orcindicadados" description="Dados dos indicadores." prefix="" label="Dados dos indicadores do PPA." type="0">
+  <fields>
+    <field name="sequencial"
+           conteudo="int4"
+           description="Sequencial"
+           inivalue="0"
+           label="Sequencial"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Sequencial"
+           reference=""
+           ispk="t"
+           hassequence="t">
+      <sequence name="plugins.orcindicadados_sequencial_seq" ></sequence>
+    </field>
+    <field name="orcindica"
+           conteudo="int4"
+           description="Sequencial do indicador"
+           inivalue="0"
+           label="Sequencial indicador"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Sequencial indicador"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>
+    <field name="anousu"
+           conteudo="int4"
+           description="Ano"
+           inivalue="0"
+           label="Ano"
+           size="10"
+           null="f"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Ano"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>
+    <field name="dataapuracao"
+           conteudo="date"
+           description="Data da Apuração"
+           inivalue="null"
+           label="Data Apuração"
+           size="10"
+           null="t"
+           uppercase="f"
+           autocompl="f"
+           aceitatipo="1"
+           tipoobj="text"
+           labelrel="Data Apuração"
+           reference=""
+           ispk="f"
+           hassequence="f">
+    </field>
+  </fields>
+  <primarykey>
+    <fieldpk  name="sequencial"></fieldpk>
+  </primarykey>
+</table>
