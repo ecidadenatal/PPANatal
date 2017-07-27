@@ -943,9 +943,11 @@ function js_novoCadastro() {
     </td>
     <td>
       <?php
-      $aOrigem = array("SOCIEDADE"                 => "SOCIEDADE",                 
-                       "PODER PÚBLICO"             => "PODER PÚBLICO",            
-                       "SOCIEDADE E PODER PÚBLICO" => "SOCIEDADE E PODER PÚBLICO");
+      $aOrigem = array("SOCIEDADE"                                     => "SOCIEDADE",                 
+                       "PODER PÚBLICO"                                 => "PODER PÚBLICO",            
+                       "SOCIEDADE E PODER PÚBLICO"                     => "SOCIEDADE E PODER PÚBLICO",
+                       "EMENDA PARLAMENTAR"                            => "EMENDA PARLAMENTAR",
+                       "SOCIEDADE, PODER PÚBLICO E EMENDA PARLAMENTAR" => "SOCIEDADE, PODER PÚBLICO E EMENDA PARLAMENTAR");
       db_select("origem", $aOrigem, true, $db_opcao);
       ?>
     </td>
@@ -1287,12 +1289,6 @@ $1]]>
   </file>
     
   <file path='orc1_orcindica011.php'>
-    <operation>
-      <search regex="true"><![CDATA[(include.*forms\/db_frmorcindica.*;)]]></search>
-      <add>
-        <![CDATA[include(modification("forms/db_frmorcindica.php"));]]>
-      </add>
-    </operation>
 
     <operation>
       <search regex="true"><![CDATA[(\$clorcindica.*cl_orcindica\(\);)]]></search>
@@ -1314,7 +1310,7 @@ $clorcindicadados    = db_utils::getDao("orcindicadados");]]>
   for ($iAno = db_getsession("DB_anousu");$iAno <= $iUltimoAno; $iAno++) {  
     
     $clorcindicaprograma->o18_anousu      = $iAno;
-    $clorcindicaprograma->o18_orcindica   = $o10_indica;
+    $clorcindicaprograma->o18_orcindica   = $clorcindica->o10_indica;
     $clorcindicaprograma->o18_orcprograma = $programa;
     $clorcindicaprograma->incluir(null);
     $sErroMsg = $clorcindicaprograma->erro_msg;    
@@ -1323,7 +1319,7 @@ $clorcindicadados    = db_utils::getDao("orcindicadados");]]>
     }
   }
 
-  $clorcindicadados->orcindica = $o10_indica;
+  $clorcindicadados->orcindica = $clorcindica->o10_indica;
   $clorcindicadados->anousu = db_getsession("DB_anousu");
   $clorcindicadados->dataapuracao = $dataapuracao;
   $clorcindicadados->incluir(null);
@@ -1336,12 +1332,7 @@ $clorcindicadados    = db_utils::getDao("orcindicadados");]]>
   </file>
 
   <file path='orc1_orcindica012.php'>
-    <operation>
-      <search regex="true"><![CDATA[(include.*forms\/db_frmorcindica.*;)]]></search>
-      <add>
-        <![CDATA[include(modification("forms/db_frmorcindica.php"));]]>
-      </add>
-    </operation>
+    
     <operation>
       <search regex="true"><![CDATA[(\$clorcindica.*cl_orcindica;)]]></search>
       <add>
