@@ -1,0 +1,14 @@
+ cod_repasse | data_solicitacao |    valor    | numslip | data_autorizacao |                           motivo                            | cod_anexo |                    descr_anexo                    |   status   | status_i 
+-------------+------------------+-------------+---------+------------------+-------------------------------------------------------------+-----------+---------------------------------------------------+------------+----------
+        4185 | 2017-07-10       |      457314 |    4185 | 2017-07-10       | PAGTº DA FOLHA DE PESSOAL - JUNHO/2017                      |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        1455 | 2016-04-29       | 13669420.75 |    1455 | 2016-04-29       | PAGTº DA FOLHA DE PESSOAL - ABRIL/2016                      |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        1456 | 2016-04-29       |  2850132.64 |    1456 | 2016-04-29       | PAGTº DA FOLHA DE PESSOAL, TEMPORÁRIOS - ABRIL/2016         |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        4349 | 2017-07-27       |    11756.46 |    4349 | 2017-07-27       | Teste_27072017                                              |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        4183 | 2017-07-10       |     1028220 |    4183 | 2017-07-10       | PAGTº DA FOLHA DE PESSOAL - JUNHO/2017                      |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        2435 | 2016-09-29       |   332129817 |    2435 | 2016-09-29       | PAGTº DA FOLHA DE PESSOAL - CONTRATO TEMPORÁRIO -SMS/AGO/16 |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        4182 | 2017-07-10       | 13144316.65 |    4182 | 2017-07-10       | PAGTº DA FOLHA DE PESSOAL - JUNHO/2017                      |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        4184 | 2017-07-10       |    36177.62 |    4184 | 2017-07-10       | PAGTº DA FOLHA DE PESSOAL - JUNHO/2017                      |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        4350 | 2017-07-27       |  1714651.64 |    4350 | 2017-07-27       | 2%C2%BA%20teste_27072017                                    |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+        2434 | 2016-09-29       | 15024694.67 |    2434 | 2016-09-29       | pagtº da folha de pessoal - agosto/2016                     |         2 | PESSOAL E ENCARGOS SOCIAIS ADM. DIRETA E INDIRETA | Atualizado |        1
+(10 registros)
+
