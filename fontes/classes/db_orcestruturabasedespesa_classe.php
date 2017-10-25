@@ -24,8 +24,8 @@
  * Copia da licenca no diretorio licenca/licenca_en.txt
  * licenca/licenca_pt.txt
  */
-class cl_orcprojativmetas extends DAOBasica {
+class cl_orcestruturabasedespesa extends DAOBasica {
 	public function __construct() {
-		parent::__construct ( "plugins.orcprojativmetas" );
+		parent::__construct ( "plugins.orcestruturabasedespesa" );
 	}
 }

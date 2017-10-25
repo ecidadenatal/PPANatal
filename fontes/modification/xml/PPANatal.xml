@@ -342,7 +342,26 @@ function js_novoCadastro() {
     </operation>               
   </file>    
   
- <file path='func_orcindica.php'>
+  <file path='func_orcprojativ.php'>
+    <operation>
+      <search regex="true"><![CDATA[(db_lovrot\(.*\);)]]></search>
+      <add>
+        <![CDATA[$sql = "select x.*, 
+                       orcorgao as dl_orgao, 
+                       orcunidade as dl_unidade, 
+                       sigla 
+                  from ({$sql}) as x 
+                       left join plugins.orcprojativorcunidade on orcprojativ = o55_projativ 
+                                                              and anousu = db_o55_anousu 
+                       left join tmp_inst_unid                 on orgao = orcorgao 
+                                                              and unidade = orcunidade";
+                                                              
+        $1]]>
+      </add>
+    </operation>
+  </file>   
+  
+  <file path='func_orcindica.php'>
     <operation>
       <search regex="true"><![CDATA[\$campos\s*=.*;]]></search>
       <add>
@@ -1176,10 +1195,10 @@ function js_submit() {
           );
     $("abrangencias").value = sAbrangencias;
     
-    if (($F('orgao') == "" || $F('unidade') == "") && <?=$db_opcao?> != 3 ) {
-      alert('Informe o Orgão e Unidade!');
-      return false;
-    }
+    //if (($F('orgao') == "" || $F('unidade') == "") && <?=$db_opcao?> != 3 ) {
+    //  alert('Informe o Orgão e Unidade!');
+    //  return false;
+    //}
     
     document.form1.submit();
 }
@@ -1412,6 +1431,135 @@ $clorcindicadados    = db_utils::getDao("orcindicadados");]]>
   }]]>
       </add>
     </operation>
-  </file>
+  </file>  
+  
+  <file path='forms/db_frmorcreceita.php'>
 
+    <operation>
+      <search regex="true"><![CDATA[(<script>)]]></search>
+      <add>
+        <![CDATA[$1
+        
+//Inicio plugin PPANatal
+function js_validaValor() {
+  if (document.form1.o50_estrutreceita.value.substr(0,1) == "9") {
+    if (document.form1.o70_valor.value != "" && document.form1.o70_valor.value > 0) {
+        document.form1.o70_valor.value = document.form1.o70_valor.value*-1;
+    }
+  }
+}
+//Fim plugin PPANatal
+
+]]>
+      </add>
+    </operation>
+    
+    <operation>
+      <search regex="true"><![CDATA[(db_input.*o70_valor.*\$db_opcao)]]></search>
+      <add>
+        <![CDATA[$1,"onkeyup='js_validaValor()'"]]>
+      </add>
+    </operation>
+  </file>  
+  
+  <file path='orc4_manutdotacao004.php'>
+    <operation>
+      <search regex="true" flag="U"><![CDATA[(\$clorcdotacao->incluir\(.*\);((\n*.*)*)\})]]></search>
+      <add>
+        <![CDATA[/*
+                                         * Inicio Plugin PPANATAL
+                                         * 
+                                         * Verificamos se o estrutural da despesa é valido 
+                                         */
+                                         if (db_getsession("DB_anousu") > 2017) {
+                                         
+                                             $oDaoEstruturaBaseDespesa    = db_utils::getDao("orcestruturabasedespesa");
+                                             if ($o58_programa != 1) {
+                                               $sWhereEstruturaBaseDespesa  = " exercicio = ".db_getsession("DB_anousu");
+                                               $sWhereEstruturaBaseDespesa .= " and instituicao = ".db_getsession("DB_instit");
+                                               $sWhereEstruturaBaseDespesa .= " and orcorgao = {$o58_orgao} ";
+                                               $sWhereEstruturaBaseDespesa .= " and orcunidade = {$o58_unidade} ";
+                                               $sWhereEstruturaBaseDespesa .= " and orcfuncao = {$o58_funcao} ";
+                                               $sWhereEstruturaBaseDespesa .= " and orcsubfuncao = {$o58_subfuncao} ";
+                                               $sWhereEstruturaBaseDespesa .= " and orcprograma = {$o58_programa} ";
+                                               $sWhereEstruturaBaseDespesa .= " and orcprojativ = {$o58_projativ} ";
+                                             } else {
+                                               $sWhereEstruturaBaseDespesa  = " exercicio = ".db_getsession("DB_anousu");
+                                               $sWhereEstruturaBaseDespesa .= " and orcprojativ = {$o58_projativ} ";
+                                             }
+                                             $oDaoEstruturaBaseDespesa->sql_record($oDaoEstruturaBaseDespesa->sql_query(null, "sequencial", null, $sWhereEstruturaBaseDespesa));
+                                             if ($o58_programa != 1 && $o58_programa != 999 && $oDaoEstruturaBaseDespesa->numrows == 0){
+                                                 $erro_trans = true;
+                                                 $clorcdotacao->erro_status = "0";
+                                                 $clorcdotacao->erro_msg = "Estrutural informado para a despesa não encontrado no cadastro base das metas da depesa";
+                                             } else if ($o58_programa == 1 && $oDaoEstruturaBaseDespesa->numrows > 0) {
+                                                 $erro_trans = true;
+                                                 $clorcdotacao->erro_status = "0";
+                                                 $clorcdotacao->erro_msg = "Esta ação está no PPA, não pode ser vinculada ao programa 001";
+                                             }
+                                         }
+                                           
+                                           if (!$erro_trans) {
+                                             $1
+                                           }
+                                           /*
+                                            * Fim Plugin PPANATAL
+                                            */ ]]>
+      </add>
+    </operation>
+  </file>    
+  
+  <file path='orc4_manutdotacao005.php'>
+    <operation>
+      <search regex="true" flag="U"><![CDATA[(\$clorcdotacao->alterar\(.*\);((\n*.*)*)\})]]></search>
+      <add>
+        <![CDATA[/*
+                  * Inicio Plugin PPANATAL
+                  * 
+                  * Verificamos se o estrutural da despesa é valido 
+                  */
+                    if (db_getsession("DB_anousu") > 2017) {
+                    
+                      $oDaoEstruturaBaseDespesa    = db_utils::getDao("orcestruturabasedespesa");
+                      if ($o58_programa != 1) {
+                        $sWhereEstruturaBaseDespesa  = " exercicio = ".db_getsession("DB_anousu");
+                        $sWhereEstruturaBaseDespesa .= " and instituicao = ".db_getsession("DB_instit");
+                        $sWhereEstruturaBaseDespesa .= " and orcorgao = {$o58_orgao} ";
+                        $sWhereEstruturaBaseDespesa .= " and orcunidade = {$o58_unidade} ";
+                        $sWhereEstruturaBaseDespesa .= " and orcfuncao = {$o58_funcao} ";
+                        $sWhereEstruturaBaseDespesa .= " and orcsubfuncao = {$o58_subfuncao} ";
+                        $sWhereEstruturaBaseDespesa .= " and orcprograma = {$o58_programa} ";
+                        $sWhereEstruturaBaseDespesa .= " and orcprojativ = {$o58_projativ} ";
+                      } else {
+                        $sWhereEstruturaBaseDespesa  = " exercicio = ".db_getsession("DB_anousu");
+                        $sWhereEstruturaBaseDespesa .= " and orcprojativ = {$o58_projativ} ";
+                      }
+                      $oDaoEstruturaBaseDespesa->sql_record($oDaoEstruturaBaseDespesa->sql_query(null, "sequencial", null, $sWhereEstruturaBaseDespesa));
+                      if ($o58_programa != 1 && $o58_programa != 999 && $oDaoEstruturaBaseDespesa->numrows == 0){
+                          $erro_trans = true;
+                          $clorcdotacao->erro_status = "0";
+                          $clorcdotacao->erro_msg = "Estrutural informado para a despesa não encontrado no cadastro base das metas da depesa";
+                      } else if ($o58_programa == 1 && $oDaoEstruturaBaseDespesa->numrows > 0) {
+                          $erro_trans = true;
+                          $clorcdotacao->erro_status = "0";
+                          $clorcdotacao->erro_msg = "Esta ação está no PPA, não pode ser vinculada ao programa 001";
+                      }
+                      
+                    }
+                    if (!$erro_trans) {
+                      $1
+                    }
+                    /*
+                     * Fim Plugin PPANATAL
+                     */ ]]>
+      </add>
+    </operation>
+    <operation>
+      <search regex="true"><![CDATA[(Incluir)]]></search>
+      <add>
+        <![CDATA[Alterar]]>
+      </add>
+    </operation>
+  </file>     
+    
 </modification>

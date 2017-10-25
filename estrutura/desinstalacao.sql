@@ -36,5 +36,5 @@ DROP TABLE plugins.orcprojativdescricao;
 
 DROP TABLE plugins.orcprojativorigem;
 
-DROP TABLE plugins.orcindicadados;
-DROP SEQUENCE plugins.orcindicadados_sequencial_seq;
+DROP TABLE plugins.orcestruturabasedespesa;
+DROP SEQUENCE plugins.orcestruturabasedespesa_sequencial_seq;
